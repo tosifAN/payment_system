@@ -1,6 +1,11 @@
 
 # Secure Payment Integration for Order System
 
+![Project Image1](./img.png)
+![Project Image2](./img.png)
+![Project Image3](./img.png)
+
+
 ## Overview
 
 This repository contains the implementation of a secure payment processing feature, integrated into the order system. The feature allows users to seamlessly complete transactions and receive confirmation directly within the platform. The payment system is built using **Python** (with **Django** or **Flask**), the **Stripe API**, and **MySQL** to provide a secure and efficient payment solution.
