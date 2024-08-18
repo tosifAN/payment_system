@@ -1,6 +1,3 @@
-Here’s a `README.md` draft for your GitHub repository:
-
----
 
 # Secure Payment Integration for Order System
 
@@ -99,11 +96,3 @@ You can use Stripe's test mode to simulate payments during development. Visit [S
 ## License
 
 This project is licensed under the MIT License.
-
-## Contact
-
-For any questions or issues, please contact [Tosif Ansari](mailto:tosif1355@gmail.com).
-
----
-
-This `README.md` covers the key aspects of your project while providing a structured overview and instructions for setup and use. Let me know if you'd like to adjust any details!
