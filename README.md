@@ -34,8 +34,6 @@ The payment integration adds a critical functionality to platforms like **Lunchb
 ├── frontend/
 │   ├── index.html  # Payment form and confirmation UI
 │   └── payment.html  # JavaScript handling payment submission
-├── db/
-│   └── schema.sql  # MySQL schema for payments and transaction records
 ├── README.md  # Project overview
 └── requirements.txt  # Python dependencies(please install the require deoendencies)
 ```
@@ -52,7 +50,7 @@ The payment integration adds a critical functionality to platforms like **Lunchb
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/secure-payment-integration.git
+   git clone https://github.com/tosifAN/payment_system.git
    cd secure-payment-integration
    ```
 
