@@ -33,12 +33,11 @@ The payment integration adds a critical functionality to platforms like **Lunchb
 │   └── utils.py  # Utility functions for Stripe API integration
 ├── frontend/
 │   ├── index.html  # Payment form and confirmation UI
-│   ├── styles.css  # Frontend styling
-│   └── payment.js  # JavaScript handling payment submission
+│   └── payment.html  # JavaScript handling payment submission
 ├── db/
 │   └── schema.sql  # MySQL schema for payments and transaction records
 ├── README.md  # Project overview
-└── requirements.txt  # Python dependencies
+└── requirements.txt  # Python dependencies(please install the require deoendencies)
 ```
 
 ## Getting Started
@@ -64,20 +63,22 @@ The payment integration adds a critical functionality to platforms like **Lunchb
 
 3. Set up your **Stripe API keys** as environment variables:
    ```bash
-   export STRIPE_API_KEY='your-stripe-secret-key'
+   STRIPE_SECRET_KEY='your-stripe-secret-key'
+   STRIPE_PUBLISHABLE_KEY='your-stripe-publishable-key'
    ```
 
 4. Initialize the database:
    ```bash
-   mysql -u root -p < db/schema.sql
+   python manage.py makemigrations
+   python manage.py migrate
    ```
 
 5. Run the Flask/Django server:
    ```bash
-   python backend/app.py
+   python manage.py runserver
    ```
 
-6. Open the frontend (`frontend/index.html`) in your browser and test the payment flow.
+6. Open the frontend (`http://127.0.0.1:8000/payments/home/`) in your browser and test the payment flow.
 
 ### Stripe Integration
 
