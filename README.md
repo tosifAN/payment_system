@@ -1,9 +1,9 @@
 
 # Secure Payment Integration for Order System
 
-![Project Image1](./img.png)
-![Project Image2](./img.png)
-![Project Image3](./img.png)
+![Project Image1](./img/image1.png)
+![Project Image2](./img/image2.png)
+![Project Image3](./img/image.png)
 
 
 ## Overview
