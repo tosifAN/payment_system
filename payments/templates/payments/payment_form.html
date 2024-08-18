@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stripe Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+
+        #payment-form, #payment-message {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        #card-element {
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        #submit {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #submit:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+
+        #payment-message {
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <form id="payment-form">
+        <input type="text" id="cardholder-name" placeholder="Cardholder's name" required>
+        <div id="card-element"></div>  <!-- Stripe will insert the card input here -->
+        <button id="submit">Pay Now</button>
+    </form>
+    <div id="payment-message" class="hidden">
+        <p>Payment successful!</p>
+        <button onclick="window.location.href='/payments/home'">Go Home</button>
+    </div>
+   
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        const stripe = Stripe('{{ publishable_key }}');  // Replace with your Stripe publishable key
+        const elements = stripe.elements();
+        const card = elements.create('card');
+        card.mount('#card-element');
+      
+        const form = document.getElementById('payment-form');
+        const paymentForm = document.getElementById('payment-form');
+        const paymentMessage = document.getElementById('payment-message');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            // Get the amount from the form or set a static amount for testing
+            const amount = 5000;  // Example amount in cents
+
+            const response = await fetch('/payments/create-payment/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body: JSON.stringify({ amount }),
+            });
+
+            const data = await response.json();
+            console.log(data);
+
+            if (data.error) {
+                // Handle error from the server
+                paymentMessage.innerText = `Error: ${data.error}`;
+                return;
+            }
+
+            const { clientSecret } = data;
+
+            const { error } = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        name: document.getElementById('cardholder-name').value,
+                    },
+                },
+            });
+
+            if (error) {
+                paymentMessage.innerText = `Payment failed: ${error.message}`;
+            } else {
+                // Hide the payment form and show the success message
+                paymentForm.classList.add('hidden');
+                paymentMessage.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
